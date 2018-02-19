@@ -24,6 +24,33 @@ ready = {
 
   promptPlayer: function() {
     let self = this;
-    prompt.get([''])
+    prompt.get(['guessesLeft'], function(err, result) {
+      console.log("Number of guesses " + result.guessLet);
+      var userGuess = self.wordInPlay.checkLetter(result.guessesLeft);
+
+      if(userGuess == 0 ) {
+        console.log("You have choosen poorly");
+        self.guessesLeft--;
+      } else {
+        console.log("You have choosen wisely");
+          if (self.wordInPlay.findWord()){
+            console.log("You don't turn into dust");
+            return;
+          }
+      }
+
+      console.log("Number of guesses left " + self.guessesLeft);
+
+      if ((self.guessesLeft > 0) && (self.wordInPlay.found == false)) {
+        self.promptPlayer();
+      }
+      else if (self.guessesLeft == 0) {
+        console.log("Tis over my lord, you may live forever ", self.wordInPlay.target);
+      } else {
+        console.log(self.wordInPlay.wordRender());
+      }
+    );
   }
-}
+};
+
+game.startGame();
