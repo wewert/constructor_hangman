@@ -1,4 +1,4 @@
-let randomWord = require('./word.js');
+let Word = require('./word.js');
 let prompt = require('prompt');
 
 console.log('Shall we play a game?');
@@ -33,7 +33,7 @@ ready = {
         self.guessesLeft--;
       } else {
         console.log("You have choosen wisely");
-          if (self.wordInPlay.findWord()){
+          if (self.wordInPlay.findWord()) {
             console.log("You don't turn into dust");
             return;
           }
@@ -49,8 +49,8 @@ ready = {
       } else {
         console.log(self.wordInPlay.theWord());
       }
-    );
+    });
   }
 };
 
-game.startGame();
+ready.startGame();

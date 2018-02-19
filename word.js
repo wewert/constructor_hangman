@@ -37,6 +37,4 @@ function Word(target) {
     return str;
   };
 
-}
-
 module.exports = Word;
