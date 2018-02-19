@@ -14,7 +14,7 @@ ready = {
   startGame: function (word) {
     this.resetGuesses();
     this.wordInPlay = new Word(this.words[Math.floor(Math.random()* this.words.length)]);
-    this.wordInPlay.getLet();
+    this.wordInPlay.getLetter();
     this.promptPlayer();
   },
 
@@ -25,7 +25,7 @@ ready = {
   promptPlayer: function() {
     let self = this;
     prompt.get(['guessesLeft'], function(err, result) {
-      console.log("Number of guesses " + result.guessLet);
+      console.log("Number of guesses " + result.guessLetter);
       var userGuess = self.wordInPlay.checkLetter(result.guessesLeft);
 
       if(userGuess == 0 ) {
@@ -47,7 +47,7 @@ ready = {
       else if (self.guessesLeft == 0) {
         console.log("Tis over my lord, you may live forever ", self.wordInPlay.target);
       } else {
-        console.log(self.wordInPlay.wordRender());
+        console.log(self.wordInPlay.theWord());
       }
     );
   }
