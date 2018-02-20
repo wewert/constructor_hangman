@@ -1,40 +1,40 @@
-var letter = require('./letter.js');
+var letterUse = require("./letter.js");
 
-function Word(target) {
-  this.target = target;
-  this.letters = [];
-  this.found = false;
+function word(theLetter) {
+	this.theLetter = theLetter;
+	this.letterArray = [];
+	this.tries = "";
+	for(var i = 0; i < this.theLetter.length; i++) {
+		this.letterArray.push(new letterUse.letter(this.theLetter[i]));
+	}
+};
 
-  this.getLetter = function() {
-    for (var i = 0; i < this.target.length; i++);
-    }
-  };
+word.prototype.theGame = function() {
+	for(var i = 0; i < this.letterArray.length; i++) {
+		if(!this.letterArray[i].show)
+     return false;
+	}
+	   return true;
+}
 
-  this.findWord = function() {
-    this.found = this.letters.every(function(letterInPlay) {
-      return letterInPlay.appear;
-    });
-    return this.found;
-  };
+word.prototype.playLetter = function(letter) {
+	var downCase = letter.toLowerCase();
+	if (this.tries.indexOf(downCase) != -1) {
+	}
+	this.tries += downCase;
+	for(var i = 0; i < this.letterArray.length; i++) {
+		if(this.letterArray[i].theLetter.toLowerCase() == downCase) {
+		this.letterArray[i].show = true;
+		}
+	}
+};
 
-  this.checkLetter = function(guessLetter) {
-    var letterCounter = 0;
+word.prototype.string = function() {
+  var space = "";
+  for(var i = 0; i < this.letterArray.length; i++) {
+    space += this.letterArray[i].printInfo();
+  }
+  return space;
+}
 
-    for (var i = 0; i < this.letters.length; i++) {
-      if (this.letters[i].charac == letterInPlay) {
-        this.letters[i].appear = true;
-        letterCounter++;
-      }
-    }
-    return letterCounter;
-  };
-
-  this.theWord = function() {
-    var str = '';
-    for (var i = 0; i < this.letters.length; i++) {
-      str += this.letters[i].theWord();
-    }
-    return str;
-  };
-
-module.exports = Word;
+exports.wordUse = word;

@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/wewert/constructor_hangman/issues"
   },
-  "homepage": "https://github.com/wewert/constructor_hangman#readme"
+  "homepage": "https://github.com/wewert/constructor_hangman#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0",
+    "is-letter": "^1.1.1",
+    "node.js": "0.0.0"
+  }
 }

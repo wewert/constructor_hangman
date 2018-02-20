@@ -1,9 +1,15 @@
-var letter = function(letter) {
-  this.charac = letter;
-  this.appear = false;
-  this.theWord = function() {
-    return !(this.appear) ? "_" : this.charac;
-  };
-};
+exports.letter = letter;
 
-module.exports.letter;
+function letter(theLetter) {
+	this.theLetter = theLetter;
+	this.show = false;
+	if (this.theLetter == ' ')
+		this.show = true;
+}
+
+letter.prototype.printInfo = function() {
+	if (this.show) {
+		return this.theLetter;
+	}
+	return "_ ";
+}

@@ -1,56 +1,44 @@
-let Word = require('./word.js');
-let prompt = require('prompt');
+var inquirer = require("inquirer");
+var letterUse = require("./letter.js");
+var wordUse = require("./word.js");
+var game = require("./game.js");
+var wordToPlay;
 
-console.log('Shall we play a game?');
+exports.letter;
 
-prompt.start();
+var wordInstance = new wordUse.wordUse(game.wordToPlay);
+var attempts = 10;
 
-ready = {
-  words: ["neutron", "proton", "electron"],
-  count: 0,
-  guessesLeft: 10,
-  wordInPlay: null,
+console.log("=====================================================");
+console.log("Welcome to the Newest Super Deluxe Hanging of the Man");
+console.log("=====================================================");
 
-  startGame: function (word) {
-    this.resetGuesses();
-    this.wordInPlay = new Word(this.words[Math.floor(Math.random()* this.words.length)]);
-    this.wordInPlay.getLetter();
-    this.promptPlayer();
-  },
+function startGame(){
+	console.log(wordInstance.string());
+	if (wordInstance.tries.length >= attempts){
+		console.log('You have chosen poorly and now turned to dust...');
+	return;
+	}
+	inquirer.prompt([{
+		name: 'letter',
+		type: 'text',
+		message: 'Pick a cup(or in this case a letter)',
+		validate: function(str){
+			var regEx = new RegExp("^[a-zA-Z\s]{1,1}$");
+			return regEx.test(str);
+				}
+		}]).then(function(userInput) {
+				var letter = userInput.letter;
+				wordInstance.playLetter(letter);
+					if(wordInstance.theGame()) {
+					console.log(wordInstance.string() + ' is the correct word...');
+					return;
+					}
+        console.log('...You better hurry up...');
+				console.log('You have ' + (attempts - wordInstance.tries.length) + ' guesses left.')
+				startGame();
+				}
+  );
+}
 
-  resetGuesses: function() {
-    this.guessesLeft = 10;
-  },
-
-  promptPlayer: function() {
-    let self = this;
-    prompt.get(['guessesLeft'], function(err, result) {
-      console.log("Number of guesses " + result.guessLetter);
-      var userGuess = self.wordInPlay.checkLetter(result.guessesLeft);
-
-      if(userGuess == 0 ) {
-        console.log("You have choosen poorly");
-        self.guessesLeft--;
-      } else {
-        console.log("You have choosen wisely");
-          if (self.wordInPlay.findWord()) {
-            console.log("You don't turn into dust");
-            return;
-          }
-      }
-
-      console.log("Number of guesses left " + self.guessesLeft);
-
-      if ((self.guessesLeft > 0) && (self.wordInPlay.found == false)) {
-        self.promptPlayer();
-      }
-      else if (self.guessesLeft == 0) {
-        console.log("Tis over my lord, you may live forever ", self.wordInPlay.target);
-      } else {
-        console.log(self.wordInPlay.theWord());
-      }
-    });
-  }
-};
-
-ready.startGame();
+startGame();
